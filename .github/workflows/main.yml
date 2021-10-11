@@ -38,7 +38,7 @@ jobs:
       
       # setup node env
       - name: Setup node env
-        uses: actions/setup-node@2.4.1
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ matrix.node }}
           
