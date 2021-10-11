@@ -15,14 +15,26 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  /* 
+  read from the dist folder and generate slugs and content for each file:
+  https://nuxtjs.org/docs/configuration-glossary/configuration-generate/
+  
+  create a bookmarking app: 
+  https://www.smashingmagazine.com/2019/10/bookmarking-application-faunadb-netlify-11ty/
+
+  live editing:
+  We didn't exist in the other papers. We were neither born, we didn't get married, we didn't die, we didn't fight in any wars, we never participated in anything of a scientific achievement. We were truly invisible unless we committed a crime
+
+  */
   generate: {
     routes: function() {
       const fs = require('fs');
       const path = require('path');
-      return fs.readdirSync('./content/blog').map(file => {
+      return fs.readdirSync('./content/articles).map(file => {
+        console.log('file:', file)
         return {
           route: `/blog/${path.parse(file).name}`, // Return the slug
-          payload: require(`./content/blog/${file}`),
+          payload: require(`./content/articles/${file}`),
         };
       });
     },
@@ -49,7 +61,13 @@ export default {
     // https://content.nuxtjs.org/snippets/
     '@nuxt/content',
   ],
-
+  content: {
+    markdown: {
+      prism: {
+        theme: false
+      }
+    }
+  },
   /* Content Module URLs:
   /_content/articles: list the files in content/articles/
   /_content/articles/hello-world: get hello-world.md as JSON
