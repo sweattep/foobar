@@ -30,7 +30,7 @@ export default {
     routes: function() {
       const fs = require('fs');
       const path = require('path');
-      return fs.readdirSync('./content/articles).map(file => {
+      return fs.readdirSync('./content/articles').map(file => {
         console.log('file:', file)
         return {
           route: `/blog/${path.parse(file).name}`, // Return the slug
