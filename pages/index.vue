@@ -39,9 +39,9 @@ Use a custom config for a custom theme: https://debbie.codes/blog/nuxt-migrating
 export default {
   async asyncData({ params, error, $content }) {
     try {
-      const posts = await $content("posts", { deep: true }).fetch();
-      console.log("posts", posts)
-      return { posts };
+      const articles = await $content("articles", { deep: true }).fetch();
+      console.log("articles", articles)
+      return { articles };
     } catch (err) {
       error({
         statusCode: 404,

@@ -1,3 +1,21 @@
+import fs from 'fs'
+import * as path from 'path'
+
+// Get all markdown files in ./content/articles
+// and create routes for them
+// https://www.netlifycms.org/docs/nuxt/
+// https://dev.to/armiedema/pull-in-markdown-to-vue-with-nuxt-content-and-style-with-tailwind-typography-2em6
+// https://vercel.com/guides/deploying-nuxtjs-with-vercel
+// https://nuxtjs.org/deployments/vercel/
+// https://content.nuxtjs.org/advanced/
+// https://tskaggs.medium.com/host-your-personal-site-for-free-with-nuxt-js-gitlab-and-cloudflare-7fe038cfd079
+
+const getPaths = () =>
+  fs
+    .readdirSync(path.resolve(__dirname, './content/articles'))
+    .filter((filename) => path.extname(filename) === '.md')
+    .map((filename) => `/blog/${path.parse(filename).name}`)
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -14,30 +32,10 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
-  },
-  /* 
-  read from the dist folder and generate slugs and content for each file:
-  https://nuxtjs.org/docs/configuration-glossary/configuration-generate/
-  
-  create a bookmarking app: 
-  https://www.smashingmagazine.com/2019/10/bookmarking-application-faunadb-netlify-11ty/
-
-  live editing:
-  We didn't exist in the other papers. We were neither born, we didn't get married, we didn't die, we didn't fight in any wars, we never participated in anything of a scientific achievement. We were truly invisible unless we committed a crime
-
-  */
+  },  
   generate: {
-    routes: function() {
-      const fs = require('fs');
-      const path = require('path');
-      return fs.readdirSync('./content/articles').map(file => {
-        console.log('file:', file)
-        return {
-          route: `/blog/${path.parse(file).name}`, // Return the slug
-          payload: require(`./content/articles/${file}`),
-        };
-      });
-    },
+    routes: getPaths(),
+    fallback: '404.html'
   },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
